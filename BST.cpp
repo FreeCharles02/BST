@@ -73,9 +73,9 @@ public:
        }
     }
 
-    int getMin(TreeNode* node) {
+    int getMinNode(TreeNode* node) {
         if (node->left != nullptr) {
-            return this->getMin(node->left);
+            return this->getMinNode(node->left);
         }
         return node->data;
     };
@@ -86,6 +86,7 @@ public:
             // base case if tree is empty
             return;
         }
+        if (currNode == nullptr) return;
         if (currNode->data == val) {
             TreeNode* leftTemp = nullptr;
             TreeNode* rightTemp = nullptr;
@@ -100,7 +101,7 @@ public:
         
 
         if (currNode->left != nullptr && currNode->right != nullptr) {
-            int inOrderSuccesorVal = this->getMin(currNode->right);
+            int inOrderSuccesorVal = this->getMinNode(currNode->right);
             currNode->data = inOrderSuccesorVal;
            return this->_delete(inOrderSuccesorVal, currNode->right);
         }
@@ -147,25 +148,19 @@ public:
 
     void printInOrder() {
         TreeNode* currNode = this->root;
-        while (currNode != nullptr && this->traversalStack.empty() == false) {
-          this->traversalStack.push(currNode);
-          if (currNode->left != nullptr) {
-          currNode = currNode->left;
-          } else {
-            std::cout << this->traversalStack.top()->data;
+        while (currNode != nullptr || this->traversalStack.empty() == false) {
+            while(currNode != nullptr) {
+                this->traversalStack.push(currNode);
+                currNode = currNode->left;
+            }
+
+            currNode = this->traversalStack.top();
             this->traversalStack.pop();
+            std::cout << " " << currNode->data;
             currNode = currNode->right;
-          }
-        }
-    }
+    };
+};
 
-    int height() {
-
-    }
-
-    bool isBalanced() {
-        
-    }
 };
 
 int main() 
@@ -180,6 +175,8 @@ int main()
     tree.insertOrDelete(7);
     tree.insertOrDelete(15);
     tree.insertOrDelete(30);
+    tree.insertOrDelete(40);
+    tree.insertOrDelete(2);
     tree.printInOrder();
     return 0;
 }
