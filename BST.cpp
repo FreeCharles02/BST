@@ -146,8 +146,16 @@ public:
     }
 
     void printInOrder() {
-        while () {
-            // printInOrder
+        TreeNode* currNode = this->root;
+        while (currNode != nullptr && this->traversalStack.empty() == false) {
+          this->traversalStack.push(currNode);
+          if (currNode->left != nullptr) {
+          currNode = currNode->left;
+          } else {
+            std::cout << this->traversalStack.top()->data;
+            this->traversalStack.pop();
+            currNode = currNode->right;
+          }
         }
     }
 
@@ -172,5 +180,6 @@ int main()
     tree.insertOrDelete(7);
     tree.insertOrDelete(15);
     tree.insertOrDelete(30);
+    tree.printInOrder();
     return 0;
 }
