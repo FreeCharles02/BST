@@ -150,6 +150,14 @@ public:
             // printInOrder
         }
     }
+
+    int height() {
+
+    }
+
+    bool isBalanced() {
+        
+    }
 };
 
 int main() 
